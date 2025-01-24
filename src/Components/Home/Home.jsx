@@ -1,7 +1,8 @@
 import React from 'react';
 import './Home.css';
 const clientId = import.meta.env.VITE_CLIENT_ID;
-const redirectUri = "http://localhost:5173/callback";
+// const redirectUri = "http://localhost:5173/callback";
+ const redirectUri = "https://your-app.vercel.app/callback";
 const authUri = "https://accounts.spotify.com/authorize"
 const scope = "user-top-read";
 function Home() {
