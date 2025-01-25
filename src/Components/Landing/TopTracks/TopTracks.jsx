@@ -11,19 +11,9 @@ function TopTracks({ token }) {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((response) => {
-          if (!response.ok) {
-            if (response.status === 403) {
-              throw new Error('Access denied. Please check your permissions.');
-            }
-            throw new Error(`Error: ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => setTopTracks(data.items))
-        .catch((error) => {
-          console.error('Error fetching tracks:', error.message);
-        });
+        .then((response) => response.json())
+        .then((data) => setTopTracks(data.items));
+        
     }
   }, [token]);
 

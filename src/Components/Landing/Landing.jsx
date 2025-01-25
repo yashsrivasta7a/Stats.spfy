@@ -9,25 +9,38 @@ function Landing({ token, setToken }) {
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
-    localStorage.removeItem('token_expiration');
-    setToken('');
+    setToken("");
     setView(null);
   };
 
   return (
     <div>
       <h1>STATS.SPTY</h1>
-      <button className="logout-button" onClick={handleLogout}>Logout</button>
+      {!token ? (
+        <Home />
+      ) : (
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
+      )}
 
-      <div className="middle">
-        <button onClick={() => setView('artist')}>Top Artists</button>
-        <button onClick={() => setView('track')}>Top Tracks</button>
-      </div>
+      {
+      view ? (
+        <div className="top-container">
+          <button onClick={() => setView("artist")}>TOP ARTIST</button>
+          <button onClick={() => setView("track")}>TOP TRACKS</button>
+        </div>
+      ) : (
+        <div className="middle">
+  <button onClick={() => setView('artist')}>TOP ARTIST</button>
+  <button onClick={() => setView('track')}>TOP TRACKS</button>
+</div>
 
-      {view === "artist" && <TopArtist token={token} />}
-      {view === "track" && <TopTracks token={token} />}
+      )}
+
+      {view === "artist" && <TopArtist token={token} setToken={setToken} />}
+      {view === "track" && <TopTracks token={token} setToken={setToken} />}
     </div>
   );
 }
-
 export default Landing;
