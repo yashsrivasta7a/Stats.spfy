@@ -8,7 +8,7 @@ function Landing({ token, setToken }) {
   const [view, setView] = useState(null);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("access_token");
     setToken("");
     setView(null);
   };
@@ -43,5 +43,4 @@ function Landing({ token, setToken }) {
     </div>
   );
 }
-
 export default Landing;

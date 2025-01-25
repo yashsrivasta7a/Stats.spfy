@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import '../Landing.css';
+import React, { useEffect, useState } from "react";
+import "../Landing.css";
 
 function TopTracks({ token }) {
   const [topTracks, setTopTracks] = useState([]);
@@ -12,7 +12,8 @@ function TopTracks({ token }) {
         },
       })
         .then((response) => response.json())
-        .then((data) => setTopTracks(data.items));
+        .then((data) => setTopTracks(data.items))
+        .catch((error) => console.error("Error fetching tracks:", error));
     }
   }, [token]);
 

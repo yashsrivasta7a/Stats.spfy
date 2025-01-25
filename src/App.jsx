@@ -7,10 +7,19 @@ function App() {
 
   useEffect(() => {
     const hash = window.location.hash;
+
     if (hash) {
       const token = new URLSearchParams(hash.substring(1)).get('access_token');
-      // const token = hash.substring(1).split("&")[0].split("=")[1];
-      setToken(token);
+      if (token) {
+        setToken(token);
+        localStorage.setItem('access_token', token); // Store it securely
+        window.history.replaceState(null, null, window.location.pathname); // Remove the token from the URL
+      }
+    } else {
+      const savedToken = localStorage.getItem('access_token');
+      if (savedToken) {
+        setToken(savedToken);
+      }
     }
   }, []);
 
