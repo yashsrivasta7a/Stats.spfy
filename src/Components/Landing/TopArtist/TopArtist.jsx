@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "../Landing.css";
+import React, { useEffect, useState } from 'react';
+import '../Landing.css';
 
 function TopArtist({ token }) {
   const [topArtists, setTopArtists] = useState([]);
@@ -11,9 +11,19 @@ function TopArtist({ token }) {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status === 403) {
+              throw new Error('Access denied. Please check your permissions.');
+            }
+            throw new Error(`Error: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => setTopArtists(data.items))
-        .catch((error) => console.error("Error fetching artists:", error));
+        .catch((error) => {
+          console.error('Error fetching artists:', error.message);
+        });
     }
   }, [token]);
 

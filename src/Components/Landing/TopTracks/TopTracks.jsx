@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import "../Landing.css";
+import React, { useEffect, useState } from 'react';
+import '../Landing.css';
 
 function TopTracks({ token }) {
   const [topTracks, setTopTracks] = useState([]);
@@ -11,9 +11,19 @@ function TopTracks({ token }) {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status === 403) {
+              throw new Error('Access denied. Please check your permissions.');
+            }
+            throw new Error(`Error: ${response.status}`);
+          }
+          return response.json();
+        })
         .then((data) => setTopTracks(data.items))
-        .catch((error) => console.error("Error fetching tracks:", error));
+        .catch((error) => {
+          console.error('Error fetching tracks:', error.message);
+        });
     }
   }, [token]);
 

@@ -3,33 +3,40 @@ import Home from './Components/Home/Home';
 import Landing from './Components/Landing/Landing';
 
 function App() {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('access_token') || '');
 
   useEffect(() => {
     const hash = window.location.hash;
-
     if (hash) {
-      const token = new URLSearchParams(hash.substring(1)).get('access_token');
-      if (token) {
-        setToken(token);
-        localStorage.setItem('access_token', token); // Store it securely
-        window.history.replaceState(null, null, window.location.pathname); // Remove the token from the URL
+      const params = new URLSearchParams(hash.substring(1));
+      const accessToken = params.get('access_token');
+      const expiresIn = params.get('expires_in');
+
+      if (accessToken) {
+        setToken(accessToken);
+        localStorage.setItem('access_token', accessToken);
+        if (expiresIn) {
+          const expirationTime = new Date().getTime() + parseInt(expiresIn, 10) * 1000;
+          localStorage.setItem('token_expiration', expirationTime);
+        }
+        window.location.hash = ''; // Clear the URL
       }
-    } else {
-      const savedToken = localStorage.getItem('access_token');
-      if (savedToken) {
-        setToken(savedToken);
-      }
+    }
+  }, []);
+
+  // Check token expiration
+  useEffect(() => {
+    const expirationTime = localStorage.getItem('token_expiration');
+    if (expirationTime && new Date().getTime() > expirationTime) {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('token_expiration');
+      setToken('');
     }
   }, []);
 
   return (
     <div>
-      {token ? (
-        <Landing token={token} setToken={setToken} />
-      ) : (
-        <Home />
-      )}
+      {token ? <Landing token={token} setToken={setToken} /> : <Home />}
     </div>
   );
 }
