@@ -13,7 +13,6 @@ function App() {
       if (token) {
         setToken(token);
         localStorage.setItem('access_token', token); // Store the token securely
-        console.log("Current Token:", token); 
         window.history.replaceState(null, null, window.location.pathname); // Remove the token from the URL
       }
     } else {
