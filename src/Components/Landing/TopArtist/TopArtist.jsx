@@ -14,8 +14,9 @@ function TopArtist({ token, setToken }) {
         .then((response) => response.json())
         .then((data) => {
           setTopArtists(data.items); 
-          console.log(data.items);
-        })
+        })  .catch(error => {
+          console.error('Error at Fetching Artist:', error);
+        });
         
     }
   }, [token]);

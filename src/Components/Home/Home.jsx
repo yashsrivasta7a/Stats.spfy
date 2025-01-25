@@ -3,11 +3,10 @@ import './Home.css';
 const clientId = "e2daf0389bed41ad9f0c57e6ae9cddc1";
 const redirectUri =  "https://statsspotify.vercel.app/" 
 const authUri = "https://accounts.spotify.com/authorize"
-const scope = "user-top-read";
 function Home() {
   const handleClick = () => {
     
-    window.location.href = `${authUri}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=token&show_dialog=true`;
+    window.location.href = `${authUri}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=user-top-read&response_type=token&show_dialog=true`;
   };
 
   return (
