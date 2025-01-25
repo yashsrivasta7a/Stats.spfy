@@ -1,8 +1,8 @@
 import React from 'react';
 import './Home.css';
 const clientId = "e2daf0389bed41ad9f0c57e6ae9cddc1";
-const redirectUri =  "http://localhost:5173/callback" 
-// const redirectUri =  "https://statsspotify.vercel.app/" 
+// const redirectUri =  "http://localhost:5173/callback" 
+const redirectUri =  "https://statsspotify.vercel.app/" 
 const authUri = "https://accounts.spotify.com/authorize"
 function Home() {
   const handleClick = () => {
